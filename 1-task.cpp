@@ -22,12 +22,20 @@ int main() {
         else if (answer.find(' ') == std::string::npos) {
             if (answer.find('-') == std::string::npos) {
                 std::map<std::string, std::vector<std::string>>::iterator itf = phonebook_backward.find(answer);
+                if (itf == phonebook_backward.end()) {
+                    std::cout << answer << " owner is not in phone book" << std::endl;
+                    continue;
+                } 
                 for (auto i: itf->second) {
                     std::cout << answer << "'s phone number is " << i << std::endl;
                 }
             }
             else if (answer.find('-') != std::string::npos) {
                 std::map<std::string, std::string>::iterator itf = phonebook.find(answer);
+                if (itf == phonebook.end()) {
+                    std::cout << answer << " phone number is not in phone book" << std::endl;
+                    continue;
+                } 
                 std::cout << answer << " is " << itf->second << "'s phone number" << std::endl;
             }
         }
