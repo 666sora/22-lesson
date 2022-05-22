@@ -3,7 +3,7 @@
 #include <string>
 
 int main() {
-    std::map<int, std::string> registry;
+    std::map<std::string, int> registry;
     
     std::string answer = " ";
     int i = 0;
@@ -16,15 +16,19 @@ int main() {
             std::cout << "Input command: ";
             std::cin >> answer;
             
-            if (answer == "next" || answer == "next") {
+            if (answer == "next" || answer == "esc") {
                 continue;
             }
-            registry.insert(std::pair<int, std::string>(i, answer));
+            registry.insert(std::pair<std::string, int>(answer, i));
             i++;
         }
         if (answer == "next") {
-            std::map<int, std::string>::iterator it = registry.begin();
-            std::cout << it->second << std::endl;
+            std::map<std::string, int>::iterator it = registry.begin();
+            if (it == registry.end()) {
+                std::cout << "No one in there" << std::endl;
+                continue;
+            }
+            std::cout << it->first << std::endl;
             registry.erase(it);
         }
     }
