@@ -5,7 +5,13 @@
 bool is_anagram(std::string& answer_1, std::string& answer_2) {
     std::map<char, int> word;
     for (int i = 0; i < answer_1.length(); i++) {
-        word.insert(std::pair<char, int>(answer_1[i], i));
+        std::map<char, int>::iterator it = word.find(answer_1[i]);
+        if (it == word.end()) {
+            word.insert(std::pair<char, int>(answer_1[i], 1));
+        }
+        else {
+            it->second++;
+        }
     }
 
     for (int i = 0; i < answer_1.length(); i++) {
@@ -13,7 +19,14 @@ bool is_anagram(std::string& answer_1, std::string& answer_2) {
         if (it == word.end()) {
             return false;
         }
-        word.erase(it);
+        else {
+            if (it->second > 1) {
+                it->second--;
+            }
+            else {
+                word.erase(it);
+            }
+        }
     }
     return true;
 }
