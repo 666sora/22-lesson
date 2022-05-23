@@ -6,7 +6,6 @@ int main() {
     std::map<std::string, int> registry;
     
     std::string answer = " ";
-    int i = 0;
     while (answer != "esc") {
         if (answer == "esc") {
             continue;
@@ -15,12 +14,16 @@ int main() {
         while (answer != "next" && answer != "esc") {
             std::cout << "Input command: ";
             std::cin >> answer;
-            
             if (answer == "next" || answer == "esc") {
                 continue;
             }
-            registry.insert(std::pair<std::string, int>(answer, i));
-            i++;
+            std::map<std::string, int>::iterator itf = registry.find(answer);
+            if (itf == registry.end()) {
+                registry.insert(std::pair<std::string, int>(answer, 1));
+            }
+            else {
+                itf->second++;
+            }
         }
         if (answer == "next") {
             std::map<std::string, int>::iterator it = registry.begin();
@@ -29,7 +32,8 @@ int main() {
                 continue;
             }
             std::cout << it->first << std::endl;
-            registry.erase(it);
+            if (it->second > 1) it->second--;
+            else registry.erase(it);
         }
     }
 }
